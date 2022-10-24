@@ -8,16 +8,10 @@
 
     <body class="body">
       <section class="pokemonCard" v-for="pokemon in pokemonData">
-        <div class="pokemon">
-          <h1 class="pokemonName">{{pokemon.name}}</h1>
-          <img :src="pokemon.sprites.front_default" alt="pokemon.name">
-        </div>
-
-        <ul class="type">
-          <h2>Types</h2>
-          <li v-for="type in pokemon.types">{{type.type.name}}</li>
-        </ul>
-
+        <PokeCard
+              :pokemon="pokemon"
+              @remove="removePokemon"
+            />
       </section>
 
     </body>
@@ -27,8 +21,13 @@
 </template>
 
 <script>
+import PokeCard from  './components/PokeCard.vue'
+
 export default {
   name: "Vuedex",
+  components: {
+    PokeCard
+  },
   data() { return {
     pokemonData: [],
     pokemonID: "",
@@ -38,7 +37,10 @@ export default {
       try {
         const pokemonFind = await fetch ('https://pokeapi.co/api/v2/pokemon/' + this.pokemonID)
         const pokemon = await pokemonFind.json()
+        let currentDate = new Date()
+        pokemon.internalId = currentDate.getTime()
         this.pokemonData.push(pokemon)
+        console.log(typeof pokemon)
         console.log(pokemon)
         return pokemon
 
@@ -46,6 +48,10 @@ export default {
         alert ("It's not a Pokemon")
 
       }
+    },
+    removePokemon(internalId) {
+      console.log(internalId) 
+      this.pokemonData = this.pokemonData.filter((pokemon) => pokemon.internalId !== internalId)
     }
   },
   watch: {},
