@@ -13,14 +13,12 @@ export default {
 </script>
 
 <template>
-  <div class="pokemon">
+  <div class="card-box">
     <a class="remove-btn" href="#" @click="emitRemove">X</a>
-    <h1 class="pokemonName">{{pokemon.name}}</h1>
-    <img :src="pokemon.sprites.front_default" alt="pokemon.name">
+    <img class="photo" :src="pokemon.sprites.front_default" :alt="pokemon.name" />
+    <h2 class="name mb-2">{{pokemon.name}}</h2>
+    <ul class="type-list">
+      <li class="type-item" v-for="type in pokemon.types">{{type.type.name}}</li>
+    </ul>
   </div>
-
-  <ul class="type">
-    <h2>Types</h2>
-    <li v-for="type in pokemon.types">{{type.type.name}}</li>
-  </ul>
 </template>

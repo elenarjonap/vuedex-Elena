@@ -1,23 +1,29 @@
 <template>
-  <header class="header">
-    <div>
-      Type Pokemon or ID:
-      <input type="text" v-model="pokemonID"> 
-      <button class="clickbutton" @click="searchPokemon">Search Pokemon</button>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h1 class="title my-4">Pokédex</h1>
+      </div>
     </div>
 
-    <body class="body">
-      <section class="pokemonCard" v-for="pokemon in pokemonData">
-        <PokeCard
-              :pokemon="pokemon"
-              @remove="removePokemon"
-            />
-      </section>
-
-    </body>
-   
-
-  </header>
+    <div class="row">
+      <div class="form-group mb-2 mr-2">
+        <input type="text" class="form-control" id="name" placeholder='Introduce el id o nombre del pokemon' v-model="pokemonID">
+      </div>
+      <button class="btn btn-secondary mb-2" @click="searchPokemon">Buscar</button>
+    </div>
+  
+    <div class="col-md-12">
+      <div class="row card-container">
+        <div class="card-item col-md-3 text-center" v-for="pokemon in pokemonData">
+          <PokeCard
+            :pokemon="pokemon"
+            @remove="removePokemon"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -53,14 +59,6 @@ export default {
       console.log(internalId) 
       this.pokemonData = this.pokemonData.filter((pokemon) => pokemon.internalId !== internalId)
     }
-  },
-  watch: {},
-  computed: {},
-  mounted() { }
+  }
 }
 </script>
-
-
-<style scoped>
-
-</style>
